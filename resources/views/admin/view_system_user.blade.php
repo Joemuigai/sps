@@ -144,7 +144,7 @@
                 </div>
 
             </div>
-            {{-- <div class="col-md-4">
+            <div class="col-md-4">
 
                 <div class="panel mt-5">
 
@@ -204,7 +204,7 @@
 
                 </div>
 
-            </div> --}}
+            </div>
         </div>
 
         <div class="d-flex flex-wrap gap-2 mb-3">

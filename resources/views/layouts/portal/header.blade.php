@@ -30,7 +30,7 @@
 
     <meta name="geo.region" content="Kenya" />
 
-    <title>{{ $page_title }} : Strathmore Sports Management System</title>
+    <title>{{ $page_title }} : Strathmore Parking System</title>
 
     <link rel='dns-prefetch' href='//ajax.googleapis.com' />
     <link rel='dns-prefetch' href='//fonts.googleapis.com' />

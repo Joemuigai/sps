@@ -57,13 +57,16 @@
                         </div>
 
                         <div class="col-sm-4">
-                            <label class="form-label col-form-label" for="mobile">Phone Number</label>
-                            <input type="number" class="form-control form-control-lg mb-5px" id="mobile" name="mobile" value="{{ old('mobile') }}" placeholder="Enter Phone Number" autocomplete="off" />
+                            <label class="form-label col-form-label" for="mobile">Phone Number <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control form-control-lg mb-5px  @error('mobile') is-invalid @enderror"" id="mobile" name="mobile" value="{{ old('mobile') }}" placeholder="Enter Phone Number" autocomplete="off" />
+                            @error('mobile')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="col-sm-4">
                             <label class="form-label col-form-label" for="mobile">SU Username <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control form-control-lg mb-5px @error('username') is-invalid @enderror"" id="username" name="username" value="{{ old('username') }}" placeholder="Enter SU Username" autocomplete="off" />
+                            <input type="text" class="form-control form-control-lg mb-5px @error('username') is-invalid @enderror" id="username" name="username" value="{{ old('username') }}" placeholder="Enter SU Username" autocomplete="off" />
                             @error('username')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -71,16 +74,16 @@
 
                         <div class="col-sm-4">
                             <label class="form-label col-form-label" for="position">Position <span class="text-danger">*</span></label>
-                            <select class="form-select form-select-lg mb-5px @error('role_id') is-invalid @enderror"
-                                    name="role_id" id="role_id">
+                            <select class="form-select form-select-lg mb-5px @error('role') is-invalid @enderror"
+                                    name="role" id="role">
                                 <option value="">--- Select User Position ---</option>
                                 @foreach ($roles as $role)
-                                    <option value="{{ $role->id }}"
-                                        {{ old('id') == $role->id ? 'selected' : '' }}>
+                                    <option value="{{ $role->name }}"
+                                        {{ old('role') == $role->name ? 'selected' : '' }}>
                                         {{ $role->name }}</option>
                                 @endforeach
                             </select>
-                            @error('role_id')
+                            @error('role')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
