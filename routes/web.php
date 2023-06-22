@@ -20,6 +20,10 @@ Route::get('/', [Login::class, 'index'])->name('account.login');
 Route::get('/auth/login', [Login::class, 'index'])->name('account.login');
 Route::post('/auth/user/login', [Login::class, 'login2'])->name('login.user');
 Route::get('/auth/logout', [Login::class, 'logout'])->name('account.logout');
+Route::get('/auth/forgot_password', [Login::class, 'forgotPassword'])->name('account.forgotPassword');
+Route::post('/auth/forgot_password/send_password_reset_link', [Login::class, 'sendResetPasswordLink'])->name('account.sendResetPasswordLink');
+Route::get('/auth/reset_password/{token}', [Login::class, 'resetPassword'])->name('password.reset');
+Route::post('/auth/reset_password/password/update', [Login::class, 'updatePassword'])->name('password.change');
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 

@@ -6,7 +6,7 @@
 @endif
 
 @if (session('error'))
-    <div class="alert alert-warning alert-dismissible fade show">
+    <div class="alert alert-danger alert-dismissible fade show">
         {{ session('error') }}
         <button type="button" class="btn-close" data-bs-dismiss="alert"></span>
     </div>

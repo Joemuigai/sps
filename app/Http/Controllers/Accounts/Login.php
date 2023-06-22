@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Accounts;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\PasswordReset;
+use Spatie\Permission\Models\Role;
+use App\Models\User as ModelsUser;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
-use Spatie\Permission\Models\Role;
 
 
 class Login extends Controller
@@ -22,7 +24,7 @@ class Login extends Controller
         ]);
     }
 
-    
+
 
     // Login Attempt
     public function login2(Request $request)
@@ -98,6 +100,66 @@ class Login extends Controller
                 ->with(['success' => 'You have successfully logged in as an the Team Coach']);
         }
 
+    }
+
+
+    // Password Reset Page
+
+    public function resetPassword($token)
+    {
+        $page_title = 'Reset Password';
+
+        $user = PasswordReset::where('token', $token)->first();
+
+        if(! $user){
+
+            return redirect()
+                    ->back()
+                    ->with(['error' => 'Password reset token is invalid!']);
+
+        }
+
+        $email = $user->email;
+
+        return view('auth.reset_password', [
+            'page_title' => $page_title,
+            'token' => $token,
+            'email' => $email,
+        ]);
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $request->validate([
+            'token' => 'required',
+            'email' => 'required|email|exists:users',
+            'password' => 'required|min:8',
+            'confirm_password' => 'required|same:password'
+        ]);
+
+
+        $user = ModelsUser::where('email', $request->email)->first();
+        if (!$user) {
+
+            return redirect()
+                ->back()
+                ->with(['error' => 'This account does not exist']);
+        } else {
+
+            $user->password = Hash::make($request->password);
+
+
+            if($user->save()){
+
+                PasswordReset::where('email', $user->email)->delete();
+
+            }
+
+            // Return a success message
+            $success_msg = 'Password for account user ' . $user->first_name . ' ' . $user->last_name . ' has been reset successfully. You can now sign in to access your account.';
+
+            return redirect()->route('account.login')->with('success', $success_msg);
+        }
     }
 
 
