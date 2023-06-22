@@ -64,7 +64,7 @@
                             in <i class="fa fa-sign-in-alt"></i> </button>
                     </div>
                     <div class="mb-10px pb-40px text-white">
-                        Forgot password ? Click <a href="register_v3.html" style="color: #12089b;">here</a> to
+                        Forgot password ? Click <a href="{{ route('account.forgotPassword')}}" style="color: #12089b;">here</a> to
                         reset.
                     </div>
                     <hr class="text-white" />

@@ -3,13 +3,15 @@
 namespace App\Http\Controllers\Accounts;
 
 use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\PasswordReset;
-use Spatie\Permission\Models\Role;
 use App\Models\User as ModelsUser;
+use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
 
 
@@ -101,6 +103,78 @@ class Login extends Controller
         }
 
     }
+
+
+    // Forgot Password Page
+
+    public function forgotPassword()
+    {
+        $page_title = 'Forgot Password';
+
+        return view('auth.forgot_password', [
+            'page_title' => $page_title,
+        ]);
+    }
+
+    // Submit forgot password email and send password reset link
+
+    public function sendResetPasswordLink(Request $request)
+    {
+        // Validate email input
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+
+
+        // Check if user is currently registered
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return redirect()
+                ->back()
+                ->withInput($request->only('email'))
+                ->with(['error' => 'This email is currently not registered.']);
+        } else {
+            // Generate an email password reset token
+            $token = Str::random(64);
+
+            // Insert email and token in password resets table
+            $passwordResetToken = PasswordReset::where('email', $request->email)->first();
+            if($passwordResetToken){
+
+                PasswordReset::where('email', $request->email)->update([
+                    'email' => $request->email,
+                    'token' => $token,
+                ]);
+
+            }else{
+
+                PasswordReset::create([
+                    'email' => $request->email,
+                    'token' => $token,
+                ]);
+
+            }
+
+
+            // Send password reset link email with the token
+            if (Mail::send('emails.password-reset', ['token' => $token, 'user' => $user], function ($message) use ($request) {
+                $message->to($request->email);
+                $message->subject("Reset Password Notification");
+            })) {
+
+                return redirect()
+                    ->back()
+                    ->with(['success' => 'An email with the password reset link was sent to ' . $request->email]);
+            } else {
+
+                return redirect()
+                    ->back()
+                    ->with(['error' => 'There was an error sending the email. Please try again. ']);
+            }
+        }
+    }
+
 
 
     // Password Reset Page
