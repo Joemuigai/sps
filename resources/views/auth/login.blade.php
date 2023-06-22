@@ -37,19 +37,20 @@
                         <input type="text" class="form-control h-45px fs-13px @error('username') is-invalid @enderror"
                             name="username" id="username" value="{{ old('username') }}" placeholder="Student ID" />
                         <label for="emailAddress" class="d-flex align-items-center fs-13px text-gray-600">Username
-                            </label>
+                        </label>
                         @error('username')
                             <div class="invalid-feedback text-bold" style="color: #fff;">{{ $message }}</div>
                         @enderror
                     </div>
 
-                    <div class="form-floating mb-15px">
+                    <div class="input-group">
                         <input type="password" class="form-control h-45px fs-13px @error('password') is-invalid @enderror"
                             name="password" id="password" value="{{ old('password') }}" placeholder="Password" />
-                        <label for="password" class="d-flex align-items-center fs-13px text-gray-600">Password</label>
-                        @error('password')
-                            <div class="invalid-feedback text-bold" style="color: #fff;">{{ $message }}</div>
-                        @enderror
+
+                        <span class="input-group-text password-toggle" onclick="togglePasswordVisibility()">
+                            <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                        </span>
+
                     </div>
 
                     <div class="form-check mb-30px">
@@ -80,4 +81,21 @@
 @endsection
 
 @section('js_scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        function togglePasswordVisibility() {
+            var passwordInput = document.getElementById("password");
+            var eyeIcon = document.querySelector(".password-toggle i");
+
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                eyeIcon.classList.remove("fa-eye-slash");
+                eyeIcon.classList.add("fa-eye");
+            } else {
+                passwordInput.type = "password";
+                eyeIcon.classList.remove("fa-eye");
+                eyeIcon.classList.add("fa-eye-slash");
+            }
+        }
+    </script>
 @endsection

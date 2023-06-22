@@ -4,49 +4,25 @@ This project aims to develop an automated smart parking system for an organizati
 
 ### Installation Instructions - [Local Deployment]
 
-Clone the project repository
-```
-git clone https://github.com/Joemuigai/sps.git && cd sps
-```
+To install, open command prompt and type:
 
-Install project dependencies
-```
-composer update
-```
-
-Copy the project environment variables
-```
-copy .env.example .env
-```
-
-Generate Project Key
-```
-php artisan key:generate
-```
-
-Link storage folder with the public folder
-```
-php artisan storage:link
-```
-
-Run migrations to populate the database
-```
-php artisan migrate
-```
-
-Run the seeders to populate the tables with seeded data
-```
-php artisan db:seed
-```
-
-Run project locally 
-```
-php artisan serve
+```bash
+$ cd C://xampp/htdocs/
+$ git clone https://github.com/Joemuigai/sps.git
+$ cd sps
+$ composer update
+$ copy .env.example .env
+$ php artisan key:generate
+$ php artisan migrate
+$ php artisan db:seed
+$ php artisan storage:link
+$ php artisan serve
 ```
 
 ### Security Vulnerabilities
+
 If you discover a security vulnerability within this application, please send an e-mail to Joe Muigai via [joemuigai004@gmail.com](mailto:joemuigai004@gmail.com). All security vulnerabilities will be promptly addressed.
 
 ### License
 
-The SPS project is open-sourced software licensed under the [Apache license]( http://www.apache.org/licenses/).
+The SPS project is open-sourced software licensed under the [Apache license](http://www.apache.org/licenses/).
