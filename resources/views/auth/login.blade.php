@@ -43,7 +43,7 @@
                         @enderror
                     </div>
 
-                    <div class="input-group">
+                    <div class="input-group mb-15px">
                         <input type="password" class="form-control h-45px fs-13px @error('password') is-invalid @enderror"
                             name="password" id="password" value="{{ old('password') }}" placeholder="Password" />
 
