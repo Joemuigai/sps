@@ -200,7 +200,7 @@ class Login extends Controller
             'token' => $token,
             'email' => $email,
         ]);
-    }
+    } 
 
     public function updatePassword(Request $request)
     {

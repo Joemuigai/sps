@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->string('password');
             $table->string('email')->unique();
-            $table->string('mobile');
+            $table->string('mobile')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->enum('status', ['activated', 'inactive', 'suspended', 'locked'])->default('activated');
             $table->rememberToken();

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Accounts\Login;
+use App\Http\Controllers\Accounts\Register;
 use App\Http\Controllers\Admin\SystemUsers;
 use App\Http\Controllers\Admin\AdminDashboard;
 
@@ -19,7 +20,12 @@ use App\Http\Controllers\Admin\AdminDashboard;
 Route::get('/', [Login::class, 'index'])->name('account.login');
 Route::get('/auth/login', [Login::class, 'index'])->name('account.login');
 Route::post('/auth/user/login', [Login::class, 'login2'])->name('login.user');
+
 Route::get('/auth/logout', [Login::class, 'logout'])->name('account.logout');
+
+Route::get('/auth/register', [Register::class, 'index'])->name('account.register');
+Route::post('/auth/register/user', [Register::class, 'register'])->name('account.registerUser');
+
 Route::get('/auth/forgot_password', [Login::class, 'forgotPassword'])->name('account.forgotPassword');
 Route::post('/auth/forgot_password/send_password_reset_link', [Login::class, 'sendResetPasswordLink'])->name('account.sendResetPasswordLink');
 Route::get('/auth/reset_password/{token}', [Login::class, 'resetPassword'])->name('password.reset');
