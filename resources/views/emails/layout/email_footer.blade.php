@@ -18,8 +18,8 @@
                                         <td class="pad" style="width:100%;padding-right:0px;padding-left:0px;">
                                             <div align="center" class="alignment" style="line-height:10px"><img
                                                     src="https://strathmore.edu/wp-content/uploads/2016/10/cropped-coatofarms-300x300.jpg"
-                                                    style="display: block; height: auto; border: 0; width: 200px; max-width: 100%;"
-                                                    width="200" /></div>
+                                                    style="display: block; height: auto; border: 0; width: 100px; max-width: 100%;"
+                                                    width="100" /></div>
                                         </td>
                                     </tr>
                                 </table>

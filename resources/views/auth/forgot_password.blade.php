@@ -46,7 +46,7 @@
                         <button type="submit" style="background-color: #12089b;" class="btn d-block h-45px w-100 btn-lg fs-14px text-white">Send Password Reset Link <i class="fa fa-sign-in-alt"></i> </button>
                     </div>
                     <div class="mb-10px pb-40px text-white">
-                        Remembered password? Click <a href="{{ route('account.login')}}" style="color: #12089b;">here</a> to
+                        Remembered password? Click <a href="{{ route('account.login')}}" style="color: #fff;">here</a> to
                         login.
                     </div>
                     <hr class="text-white" />
