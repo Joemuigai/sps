@@ -9,6 +9,7 @@ use App\Mail\AccountCreation;
 use App\Models\PasswordReset;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
+use App\Models\StudentMember;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
@@ -86,8 +87,18 @@ class Register extends Controller
                     ]);
                 }
 
-                // Save the new user
-                $user->save();
+                // Save the new user and add to the sstudents table
+                if($user->save()){
+
+                    $student = new StudentMember();
+                    $student->user_id = $user->id;
+                    $student->student_id = $user->username;
+                    $student->first_name = $user->first_name;
+                    $student->last_name = $user->last_name;
+                    $student->email = $user->email;
+
+                    $student->save();
+                }
 
                 // Send password reset link email with the token
                 if (Mail::to($user->email)->queue(new AccountCreation($user, $token))) {

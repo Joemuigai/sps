@@ -5,6 +5,8 @@ use App\Http\Controllers\Accounts\Login;
 use App\Http\Controllers\Accounts\Register;
 use App\Http\Controllers\Admin\SystemUsers;
 use App\Http\Controllers\Admin\AdminDashboard;
+use App\Http\Controllers\Member\MemberDashboard;
+use App\Http\Controllers\Member\Profile;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +48,20 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::patch('/systemusers/user/update/{user}', [SystemUsers::class, 'update'])->name('systemuser.updateUser');
     Route::patch('/systemusers/user/password/update/{user}', [SystemUsers::class, 'updatePassword'])->name('systemuser.updateUserPassword');
     Route::delete('/systemusers/remove/{user}', [SystemUsers::class, 'remove'])->name('remove.systemuser');
+
+
+});
+
+Route::middleware(['auth'])->prefix('member')->group(function () {
+
+    // ! Admin Dashboard routes
+    Route::get('/', [MemberDashboard::class, 'index'])->name('member.dashboard');
+    Route::get('/dashboard', [MemberDashboard::class, 'index'])->name('member.dashboard');
+
+    // ! Mmeber Profile routes
+    Route::get('/profile', [Profile::class, 'index'])->name('member.profile');
+    Route::get('/profile/edit', [Profile::class, 'editProfile'])->name('member.editProfile');
+    Route::patch('/profile/update/member/{member}', [Profile::class, 'updateProfile'])->name('member.updateProfile');
 
 
 });
