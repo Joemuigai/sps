@@ -55,6 +55,23 @@
 
                 {{-- End Admin Portal Sidebar Functionalities --}}
 
+            @elseif (auth()->user()->hasRole('Student'))
+                {{-- Member Sidebar Functionalities --}}
+
+                <div class="menu-item mb-1 {{ request()->is('member/profile*') ? 'active' : '' }}">
+                    <a href="{{ route('member.profile') }}" class="menu-link">
+                        <div class="menu-icon">
+                            <i class="fa fa-user-shield
+                        "></i>
+                        </div>
+                        <div class="menu-text">
+                            Member Profile
+                        </div>
+                    </a>
+                </div>
+
+                {{-- End Member Sidebar Functionalities --}}
+
 
             @endif
 

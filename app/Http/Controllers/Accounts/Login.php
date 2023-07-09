@@ -92,10 +92,10 @@ class Login extends Controller
             return redirect()
                 ->route('admin.dashboard')
                 ->with(['success' => 'You have successfully logged in as an Administrator.']);
-        }elseif (auth()->user()->hasRole('Sports Admin')) {
+        }elseif (auth()->user()->hasRole('Student')) {
             return redirect()
-                ->route('sadmin.dashboard')
-                ->with(['success' => 'You have successfully logged in as an Sports Administrator.']);
+                ->route('member.dashboard')
+                ->with(['success' => 'Student Account']);
         }elseif (auth()->user()->hasRole('Team Coach')) {
             return redirect()
                 ->route('coach.dashboard')
@@ -200,7 +200,7 @@ class Login extends Controller
             'token' => $token,
             'email' => $email,
         ]);
-    } 
+    }
 
     public function updatePassword(Request $request)
     {
