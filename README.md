@@ -20,6 +20,12 @@ $ php artisan queue:work
 $ php artisan serve
 ```
 
+### Screenshots
+
+1. Login Page
+
+![Login Page](screenshots/login.png "Login Page")
+
 ### Security Vulnerabilities
 
 If you discover a security vulnerability within this application, please send an e-mail to Joe Muigai via [joemuigai004@gmail.com](mailto:joemuigai004@gmail.com). All security vulnerabilities will be promptly addressed.
