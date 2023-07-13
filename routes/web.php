@@ -5,7 +5,12 @@ use App\Http\Controllers\Accounts\Login;
 use App\Http\Controllers\Accounts\Register;
 use App\Http\Controllers\Admin\SystemUsers;
 use App\Http\Controllers\Admin\AdminDashboard;
+use App\Http\Controllers\Admin\RegisteredCars;
+use App\Http\Controllers\Admin\RegisteredLogs;
+use App\Http\Controllers\Admin\StudentMembers;
+use App\Http\Controllers\Member\Cars;
 use App\Http\Controllers\Member\MemberDashboard;
+use App\Http\Controllers\Member\ParkingLogs;
 use App\Http\Controllers\Member\Profile;
 
 /*
@@ -50,11 +55,23 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::delete('/systemusers/remove/{user}', [SystemUsers::class, 'remove'])->name('remove.systemuser');
 
 
+    // Student Mmebers Routes
+    Route::get('/students', [StudentMembers::class, 'index'])->name('admin.students');
+    Route::get('/students/view/{student}', [StudentMembers::class, 'view'])->name('admin.viewStudent');
+    Route::get('/students/profile/edit/member/{member}', [StudentMembers::class, 'editProfile'])->name('admin.editProfile');
+    Route::patch('/students/profile/update/member/{member}', [StudentMembers::class, 'updateProfile'])->name('admin.updateProfile');
+    Route::get('/students/profile/download/file/{document}', [StudentMembers::class, 'download'])->name('admin.downloadNationalId');
+
+    // Student Mmebers Routes
+    Route::get('/registered_cars', [RegisteredCars::class, 'index'])->name('admin.cars');
+
+    // Student Mmebers Routes
+    Route::get('/parking_logs', [RegisteredLogs::class, 'index'])->name('admin.logs');
 });
 
 Route::middleware(['auth'])->prefix('member')->group(function () {
 
-    // ! Admin Dashboard routes
+    // ! Admin Dashboard routes 
     Route::get('/', [MemberDashboard::class, 'index'])->name('member.dashboard');
     Route::get('/dashboard', [MemberDashboard::class, 'index'])->name('member.dashboard');
 
@@ -62,6 +79,12 @@ Route::middleware(['auth'])->prefix('member')->group(function () {
     Route::get('/profile', [Profile::class, 'index'])->name('member.profile');
     Route::get('/profile/edit', [Profile::class, 'editProfile'])->name('member.editProfile');
     Route::patch('/profile/update/member/{member}', [Profile::class, 'updateProfile'])->name('member.updateProfile');
+    Route::get('/profile/download/file/{document}', [Profile::class, 'download'])->name('member.downloadNationalId');
 
+    // Registered Car Routes
+    Route::get('/registered_cars', [Cars::class, 'index'])->name('member.cars');
+    Route::post('/registered_cars/add', [Cars::class, 'store'])->name('member.addCar');
 
+    // Registered Car Routes
+    Route::get('/parking_logs', [ParkingLogs::class, 'index'])->name('member.parkingLoogs');
 });
