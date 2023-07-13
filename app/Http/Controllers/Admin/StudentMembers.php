@@ -1,36 +1,53 @@
 <?php
 
-namespace App\Http\Controllers\Member;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
+use App\Models\MemberCar;
 use Illuminate\Http\Request;
 use App\Models\StudentMember;
-use App\Http\Controllers\Controller;
 use App\Models\StudentMemberFile;
 use App\Models\StudentMemberPhoto;
+use App\Http\Controllers\Controller;
 
-class Profile extends Controller
+class StudentMembers extends Controller
 {
     public function index()
     {
-        $page_title = 'Member Profile';
+        $page_title = 'Students Members';
 
-        $userId = session('user_id');
+        $studentMembers = StudentMember::all();
 
-        $student = StudentMember::where('user_id', $userId)->first();
-
-
-        return view('members.profile', [
+        return view('admin.students', [
             'page_title' => $page_title,
-            'student' => $student,
+            'studentMembers' => $studentMembers,
         ]);
     }
 
-    public function editProfile()
+    public function view($id)
     {
-        $userId = session('user_id');
+        // Retrieve the player based on the player id
+        $student = StudentMember::where('id', $id)->first();
 
-        $student = StudentMember::where('user_id', $userId)->first();
+        $cars = MemberCar::where('student_member_id', $student->id)->get();
+
+        // Return a 404 response if the student was not found
+        if (!$student) {
+            abort(404);
+        }
+
+        $page_title = $student->first_name . ' ' . $student->last_name;
+
+        return view('admin.view_student_member', [
+            'student' => $student,
+            'page_title' => $page_title,
+            'cars' => $cars,
+        ]);
+    }
+
+    public function editProfile($id)
+    {
+        $student = StudentMember::where('id', $id)->first();
 
         // Return a 404 response if the member was not found
         if (!$student) {
@@ -39,7 +56,7 @@ class Profile extends Controller
 
         $page_title = $student->first_name . ' ' . $student->last_name . ' :: Update Profile';
 
-        return view('members.edit_profile', [
+        return view('admin.edit_profile', [
             'page_title' => $page_title,
             'student' => $student,
         ]);
@@ -82,6 +99,7 @@ class Profile extends Controller
         $student_member->address = $request->input('address');
         $student_member->course_faculty = $request->input('course_faculty');
         $student_member->mode_of_study = $request->input('mode_of_study');
+        $student_member->status = $request->input('status');
 
         if ($student_member->save()) {
 
@@ -194,14 +212,13 @@ class Profile extends Controller
                     ]);
                 }
             }
-
         }
 
 
         // Return a success message
         $success_msg = $student_member->first_name . ' ' . $student_member->last_name . ' info has been updated successfully.';
 
-        return redirect()->route('member.profile')->with('success', $success_msg);
+        return redirect()->route('admin.viewStudent', $student_member->id)->with('success', $success_msg);
     }
 
     public function download($id)

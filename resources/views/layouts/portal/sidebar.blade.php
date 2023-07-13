@@ -53,6 +53,39 @@
                     </a>
                 </div>
 
+                <div class="menu-item {{ request()->routeIs('admin.students') ? 'active' : '' }}">
+                    <a href="{{ route('admin.students') }}" class="menu-link">
+                        <div class="menu-icon">
+                            <i class="fa fa-user-gear"></i>
+                        </div>
+                        <div class="menu-text">
+                            Students
+                        </div>
+                    </a>
+                </div>
+
+                <div class="menu-item {{ request()->routeIs('admin.cars') ? 'active' : '' }}">
+                    <a href="{{ route('admin.cars') }}" class="menu-link">
+                        <div class="menu-icon">
+                            <i class="fa fa-car"></i>
+                        </div>
+                        <div class="menu-text">
+                            Registered Cars
+                        </div>
+                    </a>
+                </div>
+
+                <div class="menu-item {{ request()->routeIs('admin.logs') ? 'active' : '' }}">
+                    <a href="{{ route('admin.logs') }}" class="menu-link">
+                        <div class="menu-icon">
+                            <i class="fa fa-fax"></i>
+                        </div>
+                        <div class="menu-text">
+                            Parking Logs
+                        </div>
+                    </a>
+                </div>
+
                 {{-- End Admin Portal Sidebar Functionalities --}}
 
             @elseif (auth()->user()->hasRole('Student'))
@@ -66,6 +99,30 @@
                         </div>
                         <div class="menu-text">
                             Member Profile
+                        </div>
+                    </a>
+                </div>
+
+                <div class="menu-item mb-1 {{ request()->is('member/registered_cars*') ? 'active' : '' }}">
+                    <a href="{{ route('member.cars') }}" class="menu-link">
+                        <div class="menu-icon">
+                            <i class="fa fa-car
+                        "></i>
+                        </div>
+                        <div class="menu-text">
+                            Registered Cars
+                        </div>
+                    </a>
+                </div>
+
+                <div class="menu-item mb-1 {{ request()->is('member/parking_logs*') ? 'active' : '' }}">
+                    <a href="{{ route('member.parkingLoogs') }}" class="menu-link">
+                        <div class="menu-icon">
+                            <i class="fa fa-fax
+                        "></i>
+                        </div>
+                        <div class="menu-text">
+                            Parking Logs
                         </div>
                     </a>
                 </div>

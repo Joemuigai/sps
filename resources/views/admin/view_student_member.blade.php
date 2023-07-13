@@ -58,7 +58,8 @@
     <div id="content" class="app-content">
 
         <ol class="breadcrumb float-xl-end" style="--bs-breadcrumb-divider: '::';" aria-label="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('member.dashboard') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.students') }}">Students Members</a></li>
             <li class="breadcrumb-item active">Member Profile</li>
         </ol>
 
@@ -70,7 +71,7 @@
 
         <div class="mb-3 d-md-flex justify-content-md-end justify-content-sm-between">
             <div class="mt-md-0 mt-2">
-                <a href="{{ route('member.editProfile') }}"
+                <a href="{{ route('admin.editProfile', ['member'=> $student->id]) }}"
                     class="btn btn-sm btn-success text-white btn-rounded px-4 rounded-pill"><i
                         class="fa fa-plus fa-lg me-2 ms-n2 text-white"></i> Update Profile</a>
             </div>
@@ -196,7 +197,7 @@
                                                 <span class="detail-label">Student ID Copy:</span>
                                                 <span class="detail-value">
                                                     @if ($student->student_id_copy)
-                                                    <a href="{{ route('member.downloadNationalId', ['document' => $student->student_id_copy->id]) }}"><i class="fa fa-cloud-download"></i> {{ $student->student_id_copy->file_name }}</a>
+                                                    <a href="{{ route('admin.downloadNationalId', ['document' => $student->student_id_copy->id]) }}"><i class="fa fa-cloud-download"></i> {{ $student->student_id_copy->file_name }}</a>
                                                     @else
                                                         No file uploaded
                                                     @endif
@@ -207,7 +208,7 @@
                                                 <span class="detail-label">National ID Copy: </span>
                                                 <span class="detail-value">
                                                     @if ($student->student_id_copy)
-                                                    <a href="{{ route('member.downloadNationalId', ['document' => $student->student_id_copy->id]) }}"><i class="fa fa-cloud-download"></i> {{ $student->student_id_copy->file_name }}</a>
+                                                    <a href="{{ route('admin.downloadNationalId', ['document' => $student->student_id_copy->id]) }}"><i class="fa fa-cloud-download"></i> {{ $student->student_id_copy->file_name }}</a>
                                                     @else
                                                         No file uploaded
                                                     @endif
@@ -253,6 +254,130 @@
                 </div>
 
             </div>
+
+            <div class="col-md-6">
+
+                <div class="panel mt-4">
+
+                    <div class="panel-heading text-white">
+                        <h4 class="panel-title"><i class="fa fa-cars"></i> Registered Cars</h4>
+                        <div class="panel-heading-btn">
+
+                            {{-- <a href="" data-bs-toggle="modal" data-bs-target="#createModal" class="btn btn-outline-warning text-white btn-rounded px-4 rounded-pill"><i
+                                    class="fa fa-plus fa-lg me-2 ms-n2 text-white"></i> Add Team Position
+                            </a> --}}
+
+                            {{-- <a href="javascript:;" class="btn btn-xs btn-icon btn-success" id="refresh-button" data-toggle="panel-reload"><i
+                                    class="fa fa-redo"></i>
+                            </a> --}}
+
+                        </div>
+                    </div>
+
+
+                    <div class="panel-body">
+
+                        <table id="training-attendance-table" class="table table-striped table-bordered align-middle">
+                            <thead>
+                                <tr>
+                                    <th class="text-nowrap">Reg. No.</th>
+                                    <th class="text-nowrap">Model</th>
+                                    <th class="text-nowrap">Make</th>
+                                    <th class="text-nowrap">Color</th>
+                                    <th class="text-nowrap">Reg. Date</th>
+                                    <th class="text-nowrap">Expiry Date</th>
+                                    <th class="text-nowrap">Status</th>
+                                    <th class="text-nowrap">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($cars as $car)
+                                    <tr class="odd gradeX">
+                                        <td>{{ $car->registration_number }}</td>
+                                        <td>{{ $car->model }}</td>
+                                        <td>{{ $car->make }}</td>
+                                        <td>{{ $car->color }}</td>
+                                        <td>{{ date('d, M Y', strtotime($car->registration_date)) }}</td>
+                                        <td>{{ date('d, M Y', strtotime($car->expiry_date)) }}</td>
+                                        <td>
+                                            <?php if ($car->status == 'approved') : ?>
+                                            <span
+                                                class="badge border border-success text-success px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                                    class="fa fa-circle fs-9px fa-fw me-5px"></i> Approved</span>
+                                            <?php endif ?>
+                                            <?php if ($car->status == 'pending') : ?>
+                                            <span
+                                                class="badge border border-primary text-primary px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                                    class="fa fa-circle fs-9px fa-fw me-5px"></i> Pending</span>
+                                            <?php endif ?>
+                                            <?php if ($car->status == 'declined') : ?>
+                                            <span
+                                                class="badge border border-danger text-danger px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
+                                                    class="fa fa-circle fs-9px fa-fw me-5px"></i> Declined</span>
+                                            <?php endif ?>
+
+
+                                        </td>
+                                        <td>
+                                            {{-- Actions --}}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+
+                        </table>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-6">
+
+                <div class="panel mt-4">
+
+                    <div class="panel-heading text-white">
+                        <h4 class="panel-title"><i class="fa fa-cars"></i> Parking Logs</h4>
+                        <div class="panel-heading-btn">
+
+                            {{-- <a href="" data-bs-toggle="modal" data-bs-target="#createModal" class="btn btn-outline-warning text-white btn-rounded px-4 rounded-pill"><i
+                                    class="fa fa-plus fa-lg me-2 ms-n2 text-white"></i> Add Team Position
+                            </a> --}}
+
+                            {{-- <a href="javascript:;" class="btn btn-xs btn-icon btn-success" id="refresh-button" data-toggle="panel-reload"><i
+                                    class="fa fa-redo"></i>
+                            </a> --}}
+
+                        </div>
+                    </div>
+
+
+                    <div class="panel-body">
+
+                        <table id="training-table" class="table table-striped table-bordered align-middle">
+                            <thead>
+                                <tr>
+                                    {{-- <th width="1%" data-orderable="false"></th> --}}
+                                    <th class="text-nowrap">Car Reg. No.</th>
+                                    <th class="text-nowrap">Entry Time</th>
+                                    <th class="text-nowrap">Exit Time</th>
+                                    <th class="text-nowrap">Parking Space No.</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{--  --}}
+                            </tbody>
+
+                        </table>
+                    </div>
+
+
+                </div>
+
+            </div>
         </div>
     @endsection
 
@@ -275,6 +400,11 @@
 
                 if ($('#training-attendance-table').length !== 0) {
                     $('#training-attendance-table').DataTable({
+                        responsive: true
+                    });
+                }
+                if ($('#training-table').length !== 0) {
+                    $('#training-table').DataTable({
                         responsive: true
                     });
                 }
