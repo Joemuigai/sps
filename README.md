@@ -26,6 +26,22 @@ $ php artisan serve
 
 ![Login Page](screenshots/login.png "Login Page")
 
+2. Profile Page
+
+![Profile Page](screenshots/profile.png "Profile Page")
+
+3. Profile Update Page
+
+![Profile Update  Page](screenshots/updateProfile.png "Profile Update  Page")
+
+4. Registered Cars Page
+
+![Registered Cars Page](screenshots/registeredCars.png "Registered Cars Page")
+
+5. Parking Logs Page
+
+![Parking Logs Page](screenshots/parkingLogs.png "Parking Logs Page")
+
 ### Security Vulnerabilities
 
 If you discover a security vulnerability within this application, please send an e-mail to Joe Muigai via [joemuigai004@gmail.com](mailto:joemuigai004@gmail.com). All security vulnerabilities will be promptly addressed.
