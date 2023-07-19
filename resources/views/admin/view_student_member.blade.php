@@ -287,7 +287,6 @@
                                     <th class="text-nowrap">Reg. Date</th>
                                     <th class="text-nowrap">Expiry Date</th>
                                     <th class="text-nowrap">Status</th>
-                                    <th class="text-nowrap">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -318,9 +317,7 @@
 
 
                                         </td>
-                                        <td>
-                                            {{-- Actions --}}
-                                        </td>
+                                        
                                     </tr>
                                 @endforeach
                             </tbody>

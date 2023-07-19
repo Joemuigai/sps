@@ -96,7 +96,9 @@
 
                                         </td>
                                         <td>
-                                            {{-- Actions --}}
+                                            <a href="#" class="btn btn-sm btn-outline-primary text-warning"
+                                                data-bs-toggle="modal" data-bs-target="#editModal" title="Edit"
+                                                data-car-id="{{ $car->id }}"><i class="fa fa-pencil"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -107,6 +109,95 @@
 
 
                 </div>
+
+                <!-- Edit Modal -->
+                <div class="modal fade" id="editModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                    role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel"></h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="edit-car-form" method="POST" action="">
+                                    @csrf
+                                    @method('PATCH')
+                                    <div class="row mb-15px">
+                                        <div class="row mb-15">
+                                            <div class="col-sm-12">
+                                                <label class="form-label col-form-label" for="registration_number">Reg.
+                                                    No.</label>
+                                                <input type="text"
+                                                    class="form-control form-control-lg mb-5px @error('registration_number') is-invalid @enderror"
+                                                    id="registration_number" name="registration_number"
+                                                    value="{{ old('registration_number') }}" placeholder="Reg. No."
+                                                    autocomplete="off" autofocus required />
+                                                @error('registration_number')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <label class="form-label col-form-label" for="model">Model</label>
+                                                <input type="text"
+                                                    class="form-control form-control-lg mb-5px @error('model') is-invalid @enderror"
+                                                    id="model" name="model" value="{{ old('model') }}"
+                                                    placeholder="Model" autocomplete="off" required />
+                                                @error('model')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <label class="form-label col-form-label" for="make">Make</label>
+                                                <input type="text"
+                                                    class="form-control form-control-lg mb-5px @error('make') is-invalid @enderror"
+                                                    id="make" name="make" value="{{ old('make') }}"
+                                                    placeholder="Make" autocomplete="off" required />
+                                                @error('make')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <label class="form-label col-form-label" for="color">Color</label>
+                                                <input type="text"
+                                                    class="form-control form-control-lg mb-5px @error('color') is-invalid @enderror"
+                                                    id="color" name="color" value="{{ old('color') }}"
+                                                    placeholder="Color" autocomplete="off" required />
+                                                @error('color')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+
+                                            <div class="col-sm-12">
+                                                <label class="form-label col-form-label" for="status">Status <span
+                                                        class="text-danger">*</span></label>
+                                                <select
+                                                    class="form-select form-select-lg mb-5px @error('status') is-invalid @enderror"
+                                                    name="status" id="status">
+                                                    <option value="">--- Select Status ---</option>
+                                                    <option value="approved">Approved</option>
+                                                    <option value="pending">Pending</option>
+                                                    <option value="declined">Declined</option>
+                                                </select>
+                                                @error('status')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-wrap gap-2 mb-3">
+                                        <button type="submit" class="btn btn-success waves-effect waves-light"><i
+                                                class="fas fa-check-circle"></i> Update Car</button>
+                                        <button type="button" class="btn btn-md btn-outline-primary" title="Cancel"
+                                            data-bs-dismiss="modal"><i class="fas fa-times-circle"></i> Cancel</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
 
             </div>
 
@@ -149,6 +240,29 @@
 
             $(document).ready(function() {
                 TableManageDefault.init();
+            });
+        </script>
+
+        <script>
+            $(document).ready(function() {
+                // Edit Car Modal
+                $('#editModal').on('show.bs.modal', function(event) {
+                    var button = $(event.relatedTarget); // Button that triggered the modal
+                    var carId = button.data('car-id'); // Extract car ID from data attribute
+                    var modal = $(this);
+
+                    // Make an AJAX request to get the car details
+                    $.get('/admin/registered_cars/' + carId, function(data) {
+                        modal.find('.modal-title').text('Edit Car: ' + data.registration_number);
+                        modal.find('#registration_number').val(data.registration_number);
+                        modal.find('#model').val(data.model);
+                        modal.find('#make').val(data.make);
+                        modal.find('#color').val(data.color);
+                        modal.find('#status').val(data.status); // Update the car status field
+                    });
+
+                    modal.find('#edit-car-form').attr('action', '/admin/registered_cars/update/' + carId);
+                });
             });
         </script>
     @endsection
