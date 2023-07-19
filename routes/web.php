@@ -1,17 +1,19 @@
 <?php
 
+use App\Http\Controllers\Member\Cars;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Accounts\Login;
+use App\Http\Controllers\Member\Profile;
 use App\Http\Controllers\Accounts\Register;
+use App\Http\Controllers\Admin\ParkingLots;
 use App\Http\Controllers\Admin\SystemUsers;
+use App\Http\Controllers\Member\ParkingLogs;
 use App\Http\Controllers\Admin\AdminDashboard;
 use App\Http\Controllers\Admin\RegisteredCars;
 use App\Http\Controllers\Admin\RegisteredLogs;
 use App\Http\Controllers\Admin\StudentMembers;
-use App\Http\Controllers\Member\Cars;
 use App\Http\Controllers\Member\MemberDashboard;
-use App\Http\Controllers\Member\ParkingLogs;
-use App\Http\Controllers\Member\Profile;
+use App\Http\Controllers\Security\SecurityDashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,14 +66,23 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 
     // Student Mmebers Routes
     Route::get('/registered_cars', [RegisteredCars::class, 'index'])->name('admin.cars');
+    Route::get('/registered_cars/{car}', [RegisteredCars::class, 'show'])->name('admin.showcars'); // Show parking car
+    Route::patch('/registered_cars/update/{car}', [RegisteredCars::class, 'update'])->name('admin.updatecars'); // Edit parking lot
 
     // Student Mmebers Routes
     Route::get('/parking_logs', [RegisteredLogs::class, 'index'])->name('admin.logs');
+
+    // Student Mmebers Routes
+    Route::get('/parking_lots', [ParkingLots::class, 'index'])->name('admin.parkingLots'); // List all parking lots
+    Route::post('/parking_lots/add', [ParkingLots::class, 'store'])->name('admin.addParkingLot'); // Add parking lot
+    Route::get('/parking_lots/{lot}', [ParkingLots::class, 'show'])->name('admin.showParkingLot'); // Show parking lot
+    Route::patch('/parking_lots/update/{lot}', [ParkingLots::class, 'update'])->name('admin.updateParkingLot'); // Edit parking lot
+    Route::delete('/parking_lots/remove/{lot}', [ParkingLots::class, 'remove'])->name('admin.removeParkingLot'); // Delete parking lot
 });
 
 Route::middleware(['auth'])->prefix('member')->group(function () {
 
-    // ! Admin Dashboard routes 
+    // ! Admin Dashboard routes
     Route::get('/', [MemberDashboard::class, 'index'])->name('member.dashboard');
     Route::get('/dashboard', [MemberDashboard::class, 'index'])->name('member.dashboard');
 
@@ -87,4 +98,14 @@ Route::middleware(['auth'])->prefix('member')->group(function () {
 
     // Registered Car Routes
     Route::get('/parking_logs', [ParkingLogs::class, 'index'])->name('member.parkingLoogs');
+});
+
+Route::middleware(['auth'])->prefix('secuurity')->group(function () {
+
+    // ! Admin Dashboard routes
+    Route::get('/', [SecurityDashboard::class, 'index'])->name('security.dashboard');
+    Route::get('/dashboard', [SecurityDashboard::class, 'index'])->name('security.dashboard');
+
+    Route::post('/logs/add', [SecurityDashboard::class, 'store'])->name('security.addParkingLog');
+
 });

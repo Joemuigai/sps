@@ -96,10 +96,10 @@ class Login extends Controller
             return redirect()
                 ->route('member.dashboard')
                 ->with(['success' => 'Student Account']);
-        }elseif (auth()->user()->hasRole('Team Coach')) {
+        }elseif (auth()->user()->hasRole('Security')) {
             return redirect()
-                ->route('coach.dashboard')
-                ->with(['success' => 'You have successfully logged in as an the Team Coach']);
+                ->route('security.dashboard')
+                ->with(['success' => 'Security Account']);
         }
 
     }

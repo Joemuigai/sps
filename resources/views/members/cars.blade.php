@@ -153,7 +153,7 @@
                                     <th class="text-nowrap">Reg. Date</th>
                                     <th class="text-nowrap">Expiry Date</th>
                                     <th class="text-nowrap">Status</th>
-                                    <th class="text-nowrap">Actions</th>
+                                    {{-- <th class="text-nowrap">Actions</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -181,12 +181,10 @@
                                                 class="badge border border-danger text-danger px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i
                                                     class="fa fa-circle fs-9px fa-fw me-5px"></i> Declined</span>
                                             <?php endif ?>
-                                            
+
 
                                         </td>
-                                        <td>
-                                            {{-- Actions --}}
-                                        </td>
+                                        
                                     </tr>
                                 @endforeach
                             </tbody>

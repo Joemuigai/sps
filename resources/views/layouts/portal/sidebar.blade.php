@@ -53,6 +53,17 @@
                     </a>
                 </div>
 
+                <div class="menu-item {{ request()->routeIs('admin.parkingLots') ? 'active' : '' }}">
+                    <a href="{{ route('admin.parkingLots') }}" class="menu-link">
+                        <div class="menu-icon">
+                            <i class="fa fa-cubes-stacked"></i>
+                        </div>
+                        <div class="menu-text">
+                            Parking Lots
+                        </div>
+                    </a>
+                </div>
+
                 <div class="menu-item {{ request()->routeIs('admin.students') ? 'active' : '' }}">
                     <a href="{{ route('admin.students') }}" class="menu-link">
                         <div class="menu-icon">
